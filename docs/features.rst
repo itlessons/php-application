@@ -7,6 +7,7 @@ Url Generation
 some text
 
 .. code-block:: php
+
     <?php
 
     require_once __DIR__.'/../vendor/autoload.php';
@@ -27,6 +28,7 @@ Response and Redirect
 some text
 
 .. code-block:: php
+
     <?php
 
     require_once __DIR__.'/../vendor/autoload.php';
@@ -54,6 +56,7 @@ Controller Arguments
 some text
 
 .. code-block:: php
+
     <?php
 
     require_once __DIR__.'/../vendor/autoload.php';
@@ -81,6 +84,7 @@ Controllers
 some text
 
 .. code-block:: php
+
     <?php
 
     require_once __DIR__.'/../vendor/autoload.php';
@@ -102,3 +106,5 @@ some text
     }
 
     $app->run();
+
+
