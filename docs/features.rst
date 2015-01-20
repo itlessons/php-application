@@ -4,6 +4,8 @@ FEATURES
 Url Generation
 --------------
 
+some text
+
 .. code-block:: php
     <?php
 
@@ -21,6 +23,8 @@ Url Generation
 
 Response and Redirect
 ---------------------
+
+some text
 
 .. code-block:: php
     <?php
@@ -47,6 +51,8 @@ Response and Redirect
 Controller Arguments
 --------------------
 
+some text
+
 .. code-block:: php
     <?php
 
@@ -71,6 +77,8 @@ Controller Arguments
 
 Controllers
 -----------
+
+some text
 
 .. code-block:: php
     <?php
