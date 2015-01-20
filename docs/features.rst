@@ -35,7 +35,7 @@ some text
 
     $app = new Application();
 
-    $app->get('homepage', '/', function() use ($app){
+    $app->get('/', function() use ($app){
         return $app->redirect($app->url('user', ['id' => 5]));
     });
 
@@ -43,7 +43,7 @@ some text
         return $app->response($content);
     });
 
-    $app->get('user', '/api/id(id:num)', function($id) use ($app){
+    $app->get('/api/id(id:num)', function($id) use ($app){
         return $app->json($content);
     });
 
@@ -63,7 +63,7 @@ some text
 
     $app = new Application();
 
-    $app->get('homepage', '/', function(Application $app, Request $request){
+    $app->get('/', function(Application $app, Request $request){
         return $app->redirect($app->url('user', ['id' => 5]));
     });
 
@@ -71,7 +71,7 @@ some text
         return $app->response($content);
     });
 
-    $app->get('user', '/api/id(id:num)', function($id) use ($app){
+    $app->get('/api/id(id:num)', function($id) use ($app){
         return $app->json($content);
     });
 
@@ -90,8 +90,8 @@ some text
     require_once __DIR__.'/../vendor/autoload.php';
 
     $app = new Application();
-    $app->get('user', '/id(id:num)', 'FooController:userAction');
-    $app->get('user', '/api/id(id:num)', 'FooController:apiUserAction');
+    $app->get('/id(id:num)', 'FooController:userAction');
+    $app->get('/api/id(id:num)', 'FooController:apiUserAction');
 
     class FooController{
 
