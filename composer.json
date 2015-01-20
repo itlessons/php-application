@@ -1,6 +1,6 @@
 {
-  "name": "itlessons/dude",
-  "description": "description_text",
+  "name": "itlessons/php-application",
+  "description": "Simple PHP micro-framework",
   "minimum-stability": "dev",
   "require": {
     "symfony/http-foundation": "*",
