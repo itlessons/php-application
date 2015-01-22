@@ -71,7 +71,7 @@ Traits
 
         $app->mail($message);
 
-        return $app->json($data);
+        return $app->json(['ok']);
     });
 
 
