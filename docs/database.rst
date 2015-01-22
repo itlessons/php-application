@@ -1,7 +1,7 @@
 Database
 ========
 
-The DatabaseProvider provides integration with the `php-database`_ for easy database access.
+The *DatabaseProvider* provides integration with the `php-database`_ for easy database access.
 
 
 Parameters
@@ -9,10 +9,10 @@ Parameters
 
 * **db.options**: Options to construct `PDO`_ object.
 
-  * **dsn** Data Source Name
-  * **username** The user of the database to connect to. Defaults to root.
-  * **password** The password of the database to connect to.
-  * **options** The PDO options
+  * **dsn**: Data Source Name
+  * **username**: The user of the database to connect to. Defaults to root.
+  * **password**: The password of the database to connect to.
+  * **options**: The PDO options
 
 
 Usage
@@ -48,7 +48,7 @@ Usage
 Traits
 ------
 
-Application\\Provider\\DatabaseTrait adds the following shortcuts:
+*Application\\Provider\\DatabaseTrait* adds the following shortcuts:
 
 .. code-block:: php
 
@@ -64,9 +64,6 @@ Application\\Provider\\DatabaseTrait adds the following shortcuts:
 
         return $app->json($data);
     });
-
-    $app->run();
-
 
 
 .. _php-database:         https://github.com/itlessons/php-database

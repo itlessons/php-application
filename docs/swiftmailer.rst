@@ -1,19 +1,20 @@
 Swiftmailer
 ===========
 
-The SwiftMailerProvider provides a service for sending email through the `Swift Mailer library`_.
+The *SwiftMailerProvider* provides a service for sending email through the `Swift Mailer library`_.
 
 Parameters
 ----------
 
 * **swiftmailer.options**:
-  * **transport** Can be smtp, gmail, sendmail, mail, null
-  * **host** SMTP hostname, defaults to 'localhost'.
-  * **port** SMTP port, defaults to 25.
-  * **encryption**  SMTP encryption. Can be tls, ssl, null
-  * **username** SMTP username, defaults to an empty string.
-  * **password** SMTP password, defaults to an empty string.
-  * **delivery_address** Redirect all mail to this address. Useful for dev.
+
+  * **transport**: Can be smtp, gmail, sendmail, mail, null
+  * **host**: SMTP hostname, defaults to 'localhost'.
+  * **port**: SMTP port, defaults to 25.
+  * **encryption**:  SMTP encryption. Can be tls, ssl, null
+  * **username**: SMTP username, defaults to an empty string.
+  * **password**: SMTP password, defaults to an empty string.
+  * **delivery_address**: Redirect all mail to this address. Useful for dev.
 
 
 Usage
@@ -54,7 +55,7 @@ Usage
 Traits
 ------
 
-Application\Provider\SwiftMailerTrait adds the following shortcuts:
+*Application\\Provider\\SwiftMailerTrait* adds the following shortcuts:
 
 .. code-block:: php
 
@@ -73,6 +74,5 @@ Application\Provider\SwiftMailerTrait adds the following shortcuts:
         return $app->json($data);
     });
 
-    $app->run();
 
 .. _Swift Mailer library:         http://swiftmailer.org/
