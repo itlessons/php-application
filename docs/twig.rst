@@ -11,7 +11,7 @@ some text
 
     $app = new Application();
 
-    $this->register(new TwigProvider(), [
+    $app->register(new TwigProvider(), [
         'twig.path' => __DIR__ . '/views',
         'twig.options' => [
             'cache' => $this->getParameter('debug') ? null : __DIR__ . '/cache',
@@ -23,3 +23,4 @@ some text
     });
 
     $app->run();
+
