@@ -8,6 +8,7 @@ Parameters
 ----------
 
 * **db.options**: Options to construct `PDO`_ object.
+
   * **dsn** Data Source Name
   * **username** The user of the database to connect to. Defaults to root.
   * **password** The password of the database to connect to.
@@ -47,7 +48,7 @@ Usage
 Traits
 ------
 
-Application\Provider\DatabaseTrait adds the following shortcuts:
+Application\\Provider\\DatabaseTrait adds the following shortcuts:
 
 .. code-block:: php
 
