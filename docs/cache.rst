@@ -1,7 +1,7 @@
 Doctrine Cache
 ==============
 
-The *DoctrineCacheProvider* provides a service for storing data through the `Doctrine Cache Library`_..
+The *DoctrineCacheProvider* provides a service for storing data through the `Doctrine Cache Library`_.
 
 
 Parameters
