@@ -44,8 +44,8 @@ class DoctrineCacheProvider extends Provider
                 $cache = new MemcachedCache();
                 $memcached = new \Memcached();
                 $memcached->addServer(
-                    $app->getParameter('cache.memcache.host', '127.0.0.1'),
-                    $app->getParameter('cache.memcache.port', 11211)
+                    $app->getParameter('cache.memcached.host', '127.0.0.1'),
+                    $app->getParameter('cache.memcached.port', 11211)
                 );
                 $cache->setMemcached($memcached);
             }
