@@ -3,6 +3,8 @@
 namespace Application\Tests;
 
 use Application\Application;
+use Application\ApplicationExtended;
+use IoC\Container;
 use Symfony\Component\HttpFoundation\Request;
 
 class ApplicationTest extends \PHPUnit_Framework_TestCase
@@ -163,6 +165,42 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
 
         $response = $app->handle(Request::create('/2'));
         $this->assertEquals('http://localhost/hello/jack', $response->getContent());
+    }
+
+    public function testMethodInjection()
+    {
+        $app = new Application();
+        $app->get('/', function (Application $app2) use ($app) {
+            if ($app != $app2) {
+                return 'fail';
+            }
+            return get_class($app2);
+        });
+
+        $c = $app->getContainer();
+        $app->get('/c', function (Container $c1) use ($c) {
+            if ($c != $c1) {
+                return 'fail';
+            }
+            return get_class($c1);
+        });
+
+        $response = $app->handle(Request::create('/'));
+        $this->assertEquals(get_class($app), $response->getContent());
+
+        $response = $app->handle(Request::create('/c'));
+        $this->assertEquals(get_class($c), $response->getContent());
+
+        $app = new ApplicationExtended();
+        $app->get('/', function (Application $app2) use ($app) {
+            if ($app != $app2) {
+                return 'fail';
+            }
+            return get_class($app2);
+        });
+
+        $response = $app->handle(Request::create('/'));
+        $this->assertEquals(get_class($app), $response->getContent());
     }
 }
 

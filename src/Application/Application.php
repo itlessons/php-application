@@ -48,6 +48,7 @@ class Application
     {
         $this->container = new Container();
         $this->instance([get_class($this), __CLASS__, 'app'], $this);
+        $this->instance([get_class($this->container), 'container'], $this->container);
 
         $settings = array_merge(static::getDefaultSettings(), $settings);
         foreach ($settings as $k => $v) {
@@ -139,19 +140,21 @@ class Application
                 );
             }
 
-            $data = $this->resolveController($request);
-            if ($data != null) {
-                $response = call_user_func_array($data[0], $data[1]);
-                $request->attributes->set('_response', $response);
-                $this->dispatchEvent(self::EVENT_VIEW, $request);
+            $route = $request->attributes->get('_route');
+            $controller = $route->getController();
 
-                $response = $request->attributes->get('_response', $response);
-                if ($response instanceof Response) {
-                    $this->setResponse($response);
-                }
+            if (is_string($controller)) {
+                $controller = $this->parseController($controller);
             }
 
-            if ($this->response) {
+            $response = $this->container->call($controller, $route->getParameters());
+
+            $request->attributes->set('_response', $response);
+            $this->dispatchEvent(self::EVENT_VIEW, $request);
+
+            $response = $request->attributes->get('_response', $response);
+            if ($response instanceof Response) {
+                $this->setResponse($response);
                 return $this->fillerResponse();
             }
 
@@ -325,31 +328,6 @@ class Application
         $this->eventPropagationStopped = true;
     }
 
-    protected function resolveController(Request $request)
-    {
-        /** @var MatchedRoute $route */
-        $route = $request->attributes->get('_route');
-        if (!$route) {
-            return null;
-        }
-
-        $controller = $route->getController();
-
-        if (is_string($controller)) {
-            $controller = $this->parseController($controller);
-        }
-
-        if (!is_callable($controller)) {
-            throw new \InvalidArgumentException(sprintf(
-                    'Controller "%s" for URI "%s" is not callable',
-                    $this->varToString($controller),
-                    $request->getPathInfo())
-            );
-        }
-
-        return [$controller, $this->getArgumentsForCallable($controller, $route->getParameters())];
-    }
-
     protected function parseController($controller)
     {
         if (substr_count($controller, ':') == 1) {
@@ -360,55 +338,7 @@ class Application
 
         return $controller;
     }
-
-    /**
-     * @param $callable
-     * @param array $attributes
-     * @return array
-     */
-    public function getArgumentsForCallable($callable, array $attributes = [])
-    {
-        if (!is_callable($callable)) {
-            throw new \InvalidArgumentException('Argument is not callable!');
-        }
-
-        if (is_array($callable)) {
-            $r = new \ReflectionMethod($callable[0], $callable[1]);
-        } else if ($callable instanceof \Closure) {
-            $r = new \ReflectionFunction($callable);
-        } else {
-            throw new \LogicException(sprintf('Callable "%s" not recognized!', $this->varToString($callable)));
-        }
-
-        $arguments = array();
-        $request = $this->getRequest();
-
-        foreach ($r->getParameters() as $param) {
-            if (array_key_exists($param->name, $attributes)) {
-                $arguments[] = $attributes[$param->name];
-            } elseif ($request != null && $param->getClass() && $param->getClass()->isInstance($request)) {
-                $arguments[] = $request;
-            } elseif ($param->getClass() && $param->getClass()->isInstance($this)) {
-                $arguments[] = $this;
-            } elseif ($param->getClass() && $param->getClass()->isInstance($this->container)) {
-                $arguments[] = $this->container;
-            } elseif ($param->isDefaultValueAvailable()) {
-                $arguments[] = $param->getDefaultValue();
-            } else {
-                if (is_array($callable)) {
-                    $repr = sprintf('%s::%s()', get_class($callable[0]), $callable[1]);
-                } elseif (is_object($callable)) {
-                    $repr = get_class($callable);
-                } else {
-                    $repr = $callable;
-                }
-                throw new \RuntimeException(sprintf('Controller "%s" requires that you provide a value for the "$%s" argument (because there is no default value or because there is a non optional argument after this one).', $repr, $param->name));
-            }
-        }
-
-        return $arguments;
-    }
-
+    
     public function varToString($var)
     {
         if (is_object($var)) {
