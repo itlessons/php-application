@@ -56,6 +56,7 @@ class Application
         }
 
         $this->registerDefaultProviders();
+        $this->contracts();
         $this->configure();
     }
 
@@ -65,6 +66,11 @@ class Application
         $this->register(new ExceptionProvider());
         $this->register(new StringToResponseProvider());
         $this->register(new ResponseProvider());
+    }
+
+    protected function contracts()
+    {
+
     }
 
     protected function configure()
@@ -122,7 +128,7 @@ class Application
             $request = Request::createFromGlobals();
         }
 
-        $this->container->instance('request', $request);
+        $this->container->instance(['request', get_class($request)], $request);
 
         $this->boot();
 
@@ -338,7 +344,7 @@ class Application
 
         return $controller;
     }
-    
+
     public function varToString($var)
     {
         if (is_object($var)) {

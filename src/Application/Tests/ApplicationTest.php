@@ -192,14 +192,20 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(get_class($c), $response->getContent());
 
         $app = new ApplicationExtended();
-        $app->get('/', function (Application $app2) use ($app) {
+        $r = Request::create('/');
+        $app->get('/', function (Application $app2, Request $request) use ($app, $r) {
+
+            if ($request != $r) {
+                return 'fail request';
+            }
+
             if ($app != $app2) {
-                return 'fail';
+                return 'fail application';
             }
             return get_class($app2);
         });
 
-        $response = $app->handle(Request::create('/'));
+        $response = $app->handle($r);
         $this->assertEquals(get_class($app), $response->getContent());
     }
 }
