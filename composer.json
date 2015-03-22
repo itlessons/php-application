@@ -2,7 +2,12 @@
   "name": "itlessons/php-application",
   "description": "Simple PHP micro-framework",
   "minimum-stability": "dev",
+  "homepage": "http://www.itlessons.info",
+  "license": "MIT",
+  "keywords": ["microframework"],
+  "type": "library",
   "require": {
+    "php": ">=5.4.3",
     "symfony/http-foundation": "*",
     "twig/twig": ">=1.8,<2.0-dev",
     "swiftmailer/swiftmailer": ">=4.1.2,<4.2-dev",
@@ -19,6 +24,5 @@
     "psr-4": {
       "Application\\": "src/Application"
     }
-  },
-  "minimum-stability": "dev"
+  }
 }
